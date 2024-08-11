@@ -1,0 +1,37 @@
+name: Deploy mdBook
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Rust toolchain
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      # Install mdBook
+      - name: Install mdBook
+        run: cargo install mdbook
+
+      # Build the mdBook documentation
+      - name: Build mdBook
+        run: mdbook build
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}  # Only deploy from the main branch
+        with:
+          publish_dir: ./book  # The directory where mdBook outputs the built HTML files
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+          publish_branch: gh-pages  # Branch to deploy to (usually 'gh-pages')
+

@@ -1,0 +1,10 @@
+[book]
+authors = ["NeumoNeumo", "Anchor4P", "GanLiuuuu"]
+description = "Self-management with advanced psychology and neuroscience research."
+language = "en"
+multilingual = false
+src = "src"
+title = "RewardBank"
+
+[output.html]
+mathjax-support = true
